@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+  <link href="https://fonts.googleapis.com/css2?family=Comic+Neue:wght@400;700&display=swap" rel="stylesheet">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Happy Birthday Anjali ❤️</title>
 
@@ -11,7 +12,7 @@
   margin:0;
   padding:0;
   box-sizing:border-box;
-  font-family:"Comic Sans MS", cursive !important;
+  font-family: 'Comic Neue', cursive !important;
 }
 
 body{
@@ -60,10 +61,17 @@ button{
 #msg1{
   max-height:60vh;
   overflow-y:auto;
+
+  /* 👇 scrollbar hide */
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE */
 }
-#page2{
-  justify-content:flex-start;
+
+/* Chrome, Edge, Safari */
+#msg1::-webkit-scrollbar{
+  display: none;
 }
+
 
 .fadeFinal{
   opacity:0;
@@ -180,15 +188,18 @@ for(let i=0;i<100;i++){
   container.appendChild(h);
 }
 
-/* TYPEWRITER */
 function typeWriter(text, elementId, speed=25){
   let i=0;
   let el=document.getElementById(elementId);
   el.innerHTML="";
+  
   function typing(){
     if(i<text.length){
       el.innerHTML+=text.charAt(i);
       i++;
+
+      el.scrollTop = el.scrollHeight; // 👈 ye add kiya
+
       setTimeout(typing,speed);
     }
   }
