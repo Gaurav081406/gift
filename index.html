@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Happy Birthday Anjali ❤️</title>
+
+<script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:"Comic Sans MS", cursive !important;
+}
+
+body{
+  background:linear-gradient(135deg,#ffb6d9,#ffcce6,#ffd9f0);
+  color:#99004d;
+  text-align:center;
+  overflow:hidden;
+}
+
+.page{
+  display:none;
+  height:100vh;
+  padding:25px;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+}
+
+#finalPage{
+  overflow-y:auto;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:flex-start;
+  padding-top:60px;
+  padding-bottom:120px;
+}
+
+button{
+  padding:10px 20px;
+  margin-top:20px;
+  border:none;
+  border-radius:20px;
+  background:#ff3385;
+  color:white;
+  cursor:pointer;
+}
+
+.message{
+  max-width:750px;
+  white-space:pre-wrap;
+  line-height:1.7;
+  
+}
+
+.fadeFinal{
+  opacity:0;
+  transform:translateY(30px);
+  transition:all 2s ease;
+}
+.fadeFinal.show{
+  opacity:1;
+  transform:translateY(0);
+}
+
+.door{
+  font-size:90px;
+  cursor:pointer;
+}
+
+/* Hearts */
+#heartContainer{
+  position:fixed;
+  bottom:0;
+  width:100%;
+  height:100%;
+  pointer-events:none;
+}
+
+.heart{
+  position:absolute;
+  bottom:-40px;
+  color:#e60073;
+  opacity:0.4;
+  animation:floatUp linear infinite;
+}
+
+@keyframes floatUp{
+  0%{transform:translateY(0);}
+  100%{transform:translateY(-110vh) rotate(360deg);}
+}
+
+#slideImg{
+  width:90%;
+  max-width:350px;
+  border-radius:20px;
+}
+#finalPage button{
+  margin-top:40px;
+  align-self:center;
+}
+</style>
+</head>
+
+<body>
+
+<div id="heartContainer"></div>
+
+<div id="page1" class="page" style="display:flex;">
+  <h2>Someone is knocking at your heart… 💓</h2>
+  <div class="door" onclick="openDoor()">🚪</div>
+</div>
+
+<div id="page2" class="page">
+  <div id="msg1" class="message"></div>
+  <button onclick="nextToPage3()">Continue 💕</button>
+</div>
+
+<div id="page3" class="page">
+  <div id="msg2" class="message"></div>
+  <button onclick="showQuestions()">Questions 🤭</button>
+</div>
+
+<div id="questions" class="page">
+  <div id="questionBox"></div>
+</div>
+
+<div id="photos" class="page">
+  <h2>Our Beautiful Memories ❤️</h2>
+  <img id="slideImg" src="photo1.jpg">
+  <button id="photoNextBtn" style="display:none;" onclick="showFinal()">Next 💖</button>
+</div>
+
+<div id="finalPage" class="page">
+  <div id="finalMsg" class="message fadeFinal"></div>
+  <button onclick="showEnd()">END ❤️</button>
+</div>
+
+<div id="endPage" class="page">
+  <h1>Happy Birthday Baby 
+    & I love you so much ❤️🔥</h1>
+</div>
+
+<audio id="bgMusic" src="song.mp3" loop></audio>
+
+<script>
+
+/* EMAIL */
+emailjs.init("k9Tk89Nvi92DV_2A4");
+let collectedAnswers=[];
+function saveAnswer(ans){ collectedAnswers.push(ans); }
+function sendAllAnswers(){
+  emailjs.send("service_h4or1mj","template_6dbp5o4",{
+    from_name:"Anjali",
+    message:collectedAnswers.join("\n\n")
+  });
+}
+
+/* HEARTS */
+const container=document.getElementById("heartContainer");
+for(let i=0;i<100;i++){
+  let h=document.createElement("div");
+  h.className="heart";
+  h.innerHTML="❤";
+  h.style.left=Math.random()*100+"vw";
+  h.style.fontSize=(10+Math.random()*30)+"px";
+  h.style.animationDuration=(6+Math.random()*6)+"s";
+  container.appendChild(h);
+}
+
+/* TYPEWRITER */
+function typeWriter(text, elementId, speed=25){
+  let i=0;
+  let el=document.getElementById(elementId);
+  el.innerHTML="";
+  function typing(){
+    if(i<text.length){
+      el.innerHTML+=text.charAt(i);
+      i++;
+      setTimeout(typing,speed);
+    }
+  }
+  typing();
+}
+
+/* FULL MESSAGES */
+const message1 = `Oye mere pyari dumbo ❤️
+A very happy birthday to you 🎂✨
+i wish jo bhi apko cahiye sbb apko mile aap hamesa happy rho smile krti rho 😊
+
+I dont know ki apko mai kabhi express kr paunga ya nhi ki aap mere liye kya ho 🥺
+
+Kabhi baaton baaton me hum bahut lad jaate hain,
+kabhi chhoti si baat par bhi rooth jaate hain,
+Par phir bhi hum saath reh jaate hain…
+
+Kyu…
+
+Shayad isliye,
+
+kyunki hum samundar aur kinare ki tarah hain,
+banjar zameen par baarish ki tarah hain,
+khoye hue aansuon ki tarah hain,
+patang aur dor ki tarah hain,
+chand aur raat ki tarah hain,
+thandi hawa me mehakti khushboo ki tarah hain,
+andhere me jalte diye ki tarah hain,
+toote hue dil me bachi umeed ki tarah hain,
+ladte bhi hain… par phir bhi saath rehne wali aadat ki tarah hain.❤️`;
+
+const message2 = `You know you are so cute and beutiful 😍
+Mere ko nhi lgta ki mai apke liye shi hu saak hota hai kya theek ho rha hai ya nhi 🤍
+
+but jb apko dekhta hu pta nhi bss cahata hu ki aap mere sath hi rho mere ko itni jaldi koi pasand nhi aata you are really special 💖
+
+mai apse hr mere glti k liye sorry bolta hu i am sorry my dumbo 🥺
+
+I love you soo much my HQ ❤️
+i love you my balak 💕
+i love you my dumbo 😘
+i love you my baby 💖
+i love you my wifuu 💍
+i love you my gadhi 😜
+i love you my cutepie 🥰
+
+i love you jb tk mere saas nhi ruk jati 💞
+I LOVE YOU ANJALI ❤️🔥`;
+
+const finalMessage = `so aap end mai aagye ho good 😌
+pahle bat aap mujhe tum kr k hi bulaya kro 💕
+
+aap mere liye bhot important ho so kabhi mai gussa ho jata hu ya ladai ho jati hai to ye mt sochna ki mai apse durr ho jaunga nhi mrne tk to nhi you are my life ❤️
+
+mai apko bta nhi sakta jta nhi sakt a ki mere mnn mai apke liye kya hai mai apko wife bol chuka hu mai un logo ki trah nhi kah rha ki bss bol diya lekin koi mtlb nhi hai bss dekhawe k liye mene apko sach mai man liya hai you are my wife and i love you so much 💍
+
+you know jb mai apse kuch naughty bat krta hu mai sochta hu ki aap kya soch rhi hogi kya mai bol sakta hu pta nhi 🤭
+
+jb mai apse bat krta hu or mere ko app pr pyar aata hai mai bss cahata hu ki aap mere samen aajao bss ek bar apko bss dekhta rahu apke hand ko hold kro apko apne sholder pr godi mai sula lu or apko cover kr lu ❤️
+
+AAAAAAA ye kuch bate hai jo mai nhi bol pata hu 🥺
+
+you are so beutifull Hot Sexy and cute sometime mai apne aap ko nhi rok pata hu kuch krne ka mn krt ahai sorry uske liye but nhi kiya hai thek hai 😅
+
+jada kuch nhi hai bolne ko ma bss apse shadi krna cahta hu aapke sath future dekhna cahta hu aapke dukh mai apka hath pakad kr sath kda rehn acahata hu apko apne seene se lagaye rakhna cahata hu 💖
+
+mere ko bss aap chaiye mai kese or k sath nhi rah paunga na shadi kr paunga you are the one 💕
+
+aaj ka din mere liye bhot special hai babu aaj hi mere dumbo ka birth hua tha mere life ka vo insaan jo mere liye itna imp bn gya hai ki saas lo to aap yaad aajati ho sochu to aap kuch kru to aap hr jagha bss aap ❤️
+
+sorry jada bol gya hu to in the end
+
+Happy birthday my Anjali 🎂
+mere wife (hone wali wife) 💕`;
+
+function openDoor(){
+  document.getElementById("bgMusic").play();
+  page1.style.display="none";
+  page2.style.display="flex";
+  typeWriter(message1,"msg1");
+}
+
+function nextToPage3(){
+  page2.style.display="none";
+  page3.style.display="flex";
+  typeWriter(message2,"msg2");
+}
+
+/* QUESTIONS WORKING */
+let qIndex=0;
+const qData=[
+{type:"input", text:"1️⃣ What you want babu 💭"},
+{type:"yesno", text:"2️⃣ Aap mere se paresan ho gyi ho? 😏"},
+{type:"options", text:"3️⃣ apke according apke sb se close kon hai ❤️",
+ options:["Mummy","Papa","Jyoti","Friends","ya koi or.."]},
+{type:"input", text:"4️⃣ apka kabhi mere sath asa krne ka mnn hua hai jo krna cahati ho but shy ki wajha se nhi kiya (kya hai vo bhi batao) "},
+{type:"input", text:"5️⃣ Mai agr khud ko Gift kr du to kya kroge ❤️"},
+{type:"input", text:"6️⃣ So kuch kahna cahti ho aap ya krna anything (kuch bhi lekin aap krti nhi ho) 🤭? 💖"}
+];
+
+function showQuestions(){
+  page3.style.display="none";
+  questions.style.display="flex";
+  loadQ();
+}
+
+function loadQ(){
+  if(qIndex>=qData.length){
+    sendAllAnswers();
+    questions.style.display="none";
+    startSlideshow();
+    return;
+  }
+
+  let q=qData[qIndex];
+  let box=document.getElementById("questionBox");
+  box.innerHTML="<h3>"+q.text+"</h3>";
+
+  if(q.type==="input"){
+    box.innerHTML+=`<input id="ans"><br>
+    <button onclick="nextInput()">Next</button>`;
+  }
+
+  if(q.type==="yesno"){
+    box.innerHTML+=`
+    <button onclick="yesQ()">Yes</button>
+    <button id="noBtn" onclick="moveNo()">No</button>`;
+  }
+
+  if(q.type==="options"){
+    q.options.forEach(o=>{
+      box.innerHTML+=`<br><button onclick="selectOption('${o}')">${o}</button>`;
+    });
+  }
+}
+
+function nextInput(){
+  saveAnswer(document.getElementById("ans").value);
+  qIndex++;
+  loadQ();
+}
+
+function selectOption(val){
+  saveAnswer(val);
+  qIndex++;
+  loadQ();
+}
+
+function moveNo(){
+  let btn=document.getElementById("noBtn");
+  btn.style.position="absolute";
+  btn.style.left=Math.random()*60+"%";
+  btn.style.top=Math.random()*60+"%";
+}
+
+function yesQ(){
+  saveAnswer("Yes");
+
+  Swal.fire({
+    title: "Mujhe pata tha 😏",
+    text: "Lekin ab kuch nahi kar sakte 😌 Hubby bola hai to sehna padega 😎❤️",
+    icon: "success",
+    confirmButtonText: "Theek hai Next "
+  }).then(() => {
+      qIndex++;
+      loadQ();
+  });
+}
+
+/* SLIDESHOW */
+let currentSlide=1;
+let totalSlides=7;
+
+function startSlideshow(){
+  photos.style.display="flex";
+  slideShowLoop();
+}
+
+function slideShowLoop(){
+  if(currentSlide<=totalSlides){
+    document.getElementById("slideImg").src="photo"+currentSlide+".jpg";
+    currentSlide++;
+    setTimeout(slideShowLoop,3000);
+  }else{
+    document.getElementById("photoNextBtn").style.display="block";
+  }
+}
+
+function showFinal(){
+  photos.style.display="none";
+  finalPage.style.display="flex";
+  let el=document.getElementById("finalMsg");
+  el.innerText=finalMessage;
+  setTimeout(()=>{ el.classList.add("show"); },100);
+}
+
+function showEnd(){
+  finalPage.style.display="none";
+  endPage.style.display="flex";
+}
+
+</script>
+</body>
+</html>
